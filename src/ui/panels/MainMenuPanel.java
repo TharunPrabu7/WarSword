@@ -10,9 +10,9 @@ public class MainMenuPanel {
     private JPanel mainMenuPanel;
     private JButton startButton;
     private UI ui;
-    private Main.choiceHandler ch;
+    private Main.ChoiceHandler ch;
 
-    public MainMenuPanel(UI ui, Main.choiceHandler ch){
+    public MainMenuPanel(UI ui, Main.ChoiceHandler ch){
         this.ui = ui;
         this.ch = ch;
         createMainMenu();
@@ -34,5 +34,9 @@ public class MainMenuPanel {
         mainMenuPanel.add(startButton);
 
         ui.getWindow().add(mainMenuPanel);
+    }
+
+    public JPanel getMainMenuPanel(){
+        return mainMenuPanel;
     }
 }

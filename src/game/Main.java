@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 
 public class Main {
 
-    UI ui;
-    ScreenManager sm;
+    private UI ui;
+    private ScreenManager sm;
 
     public static void main(String[] args) {
         new Main().startGame();
@@ -19,17 +19,48 @@ public class Main {
         ui = new UI();
         ui.createUI();
 
-        sm = new ScreenManager(ui, new choiceHandler());
+        sm = new ScreenManager(ui, new ChoiceHandler());
         sm.showMainMenu();
-
     }
 
-    public class choiceHandler implements ActionListener{
-        public void actionPerformed(ActionEvent event){
+    public class ChoiceHandler implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
             String choice = event.getActionCommand();
-            switch (choice){
-                case "start": sm.showTown(); break;
-                case "mainmenu": sm.showMainMenu(); break;
+            switch (choice) {
+                case "start":
+                    sm.showTown();
+                    break;
+                case "mainMenu":
+                    sm.showMainMenu();
+                    break;
+                case "mine":
+                    sm.getGameController().produceOre();
+                    sm.updateInventoryDisplay(sm.getGameController().getResourceSummary());
+                    break;
+                case "smelt":
+                    sm.getGameController().smeltOre();
+                    sm.updateInventoryDisplay(sm.getGameController().getResourceSummary());
+                    break;
+                case "makeWeapon":
+                    sm.getGameController().produceWeapon();
+                    sm.updateInventoryDisplay(sm.getGameController().getResourceSummary());
+                    break;
+                case "makeArmor":
+                    sm.getGameController().produceArmor();
+                    sm.updateInventoryDisplay(sm.getGameController().getResourceSummary());
+                    break;
+                case "makeFood":
+                    sm.getGameController().produceFood();
+                    sm.updateInventoryDisplay(sm.getGameController().getResourceSummary());
+                    break;
+                case "trainSoldier":
+                    sm.getGameController().trainSoldier();
+                    sm.updateInventoryDisplay(sm.getGameController().getResourceSummary());
+                    break;
+                case "inventory":
+                    sm.toggleInventory();
+                    sm.updateInventoryDisplay(sm.getGameController().getResourceSummary());
+                    break;
             }
         }
     }

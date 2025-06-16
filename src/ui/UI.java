@@ -4,10 +4,11 @@ import javax.swing.*;
 
 public class UI {
 
-    JFrame window;
-
+    private JFrame window;
     final private int HEIGHT = 720;
     final private int WIDTH = 1280;
+
+    private JLayeredPane layeredPane;
 
     public void createUI(){
         window = new JFrame("War Sword 10000");
@@ -16,11 +17,16 @@ public class UI {
         window.setLayout(null);
         window.setResizable(false);
         window.setLocationRelativeTo(null);
+
         window.setVisible(true);
     }
 
     public JFrame getWindow(){
         return window;
+    }
+
+    public JLayeredPane getLayeredPane(){
+        return layeredPane;
     }
 
     public int getHEIGHT(){
