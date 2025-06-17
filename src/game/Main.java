@@ -1,5 +1,6 @@
 package game;
 
+import game.combat.CombatManager;
 import ui.ScreenManager;
 import ui.UI;
 
@@ -8,26 +9,28 @@ import java.awt.event.ActionListener;
 
 public class Main {
 
-    private UI ui;
     private ScreenManager sm;
+    private CombatManager cm;
 
     public static void main(String[] args) {
         new Main().startGame();
     }
 
     public void startGame(){
-        ui = new UI();
+        UI ui = new UI();
         ui.createUI();
 
         sm = new ScreenManager(ui, new ChoiceHandler());
         sm.showMainMenu();
+
+        cm = sm.getGameController().getCombatManager();
     }
 
     public class ChoiceHandler implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             String choice = event.getActionCommand();
             switch (choice) {
-                case "start":
+                case "start", "run":
                     sm.showTown();
                     break;
                 case "mainMenu":
@@ -60,6 +63,12 @@ public class Main {
                 case "inventory":
                     sm.toggleInventory();
                     sm.updateInventoryDisplay(sm.getGameController().getResourceSummary());
+                    break;
+                case "fightBoss":
+                    sm.showCombat();
+                    break;
+                case "attack":
+                    cm.attackBoss();
                     break;
             }
         }

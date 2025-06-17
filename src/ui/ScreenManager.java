@@ -2,22 +2,22 @@ package ui;
 
 import game.GameController;
 import game.Main;
+import ui.panels.CombatPanel;
 import ui.panels.InventoryPanel;
 import ui.panels.MainMenuPanel;
 import ui.panels.TownPanel;
 
-import javax.swing.*;
 import java.util.Map;
 
 public class ScreenManager implements GameUpdateListener {
     private final UI ui;
     private final Main.ChoiceHandler ch;
+    private final GameController gc;
 
-    private JPanel currentPanel;
-    private GameController gc;
-
-    private TownPanel townPanel;
-    private InventoryPanel inventoryPanel;
+    private final MainMenuPanel mainMenuPanel;
+    private final TownPanel townPanel;
+    private final CombatPanel combatPanel;
+    private final InventoryPanel inventoryPanel;
 
     private boolean isInventoryToggleOn;
 
@@ -25,25 +25,45 @@ public class ScreenManager implements GameUpdateListener {
         this.ui = ui;
         this.ch = ch;
         this.gc = new GameController(this);
+
+        // create all the panels and add at once
+        mainMenuPanel = new MainMenuPanel(ui, ch);
+        townPanel = new TownPanel(ui, ch, gc);
+        combatPanel = new CombatPanel(ui, ch, gc);
+        inventoryPanel = new InventoryPanel(townPanel);
+
+        gc.getCombatManager().setCombatPanel(combatPanel);
+
+        townPanel.getTownPanel().add(inventoryPanel.getInventoryPanel());
+        inventoryPanel.getInventoryPanel().setVisible(false);
+
+        ui.getWindow().setLayout(null);
+        ui.getWindow().add(mainMenuPanel.getMainMenuPanel());
+        ui.getWindow().add(townPanel.getTownPanel());
+        ui.getWindow().add(combatPanel.getCombatPanel());
     }
 
     public void showMainMenu() {
-        clearPanel();
-        MainMenuPanel mainMenuPanel = new MainMenuPanel(ui, ch);
-        currentPanel = mainMenuPanel.getMainMenuPanel();
-        ui.getWindow().add(currentPanel);
+        mainMenuPanel.getMainMenuPanel().setVisible(true);
+
+        townPanel.getTownPanel().setVisible(false);
+        combatPanel.getCombatPanel().setVisible(false);
         refresh();
     }
 
     public void showTown() {
-        clearPanel();
-        townPanel = new TownPanel(ui, ch, gc);
-        currentPanel = townPanel.getTownPanel();
+        townPanel.getTownPanel().setVisible(true);
 
-        inventoryPanel = new InventoryPanel(townPanel);
-        inventoryPanel.getInventoryPanel().setVisible(false);
+        mainMenuPanel.getMainMenuPanel().setVisible(false);
+        combatPanel.getCombatPanel().setVisible(false);
+        refresh();
+    }
 
-        ui.getWindow().add(currentPanel);
+    public void showCombat(){
+        combatPanel.getCombatPanel().setVisible(true);
+
+        mainMenuPanel.getMainMenuPanel().setVisible(false);
+        townPanel.getTownPanel().setVisible(false);
         refresh();
     }
 
@@ -56,16 +76,6 @@ public class ScreenManager implements GameUpdateListener {
         if (townPanel != null) {
             townPanel.updateSummary(text);
         }
-    }
-
-    private void clearPanel() {
-        if (currentPanel != null) {
-            ui.getWindow().remove(currentPanel);
-            currentPanel = null;
-        }
-
-        townPanel = null;
-        refresh();
     }
 
     public void toggleInventory(){
@@ -87,6 +97,10 @@ public class ScreenManager implements GameUpdateListener {
     private void refresh() {
         ui.getWindow().revalidate();
         ui.getWindow().repaint();
+    }
+
+    public CombatPanel getCombatPanel(){
+        return combatPanel;
     }
 
 }

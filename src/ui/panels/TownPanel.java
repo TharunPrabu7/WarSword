@@ -28,7 +28,7 @@ public class TownPanel {
         townPanel.setLayout(null);
 
         // To main menu
-        JButton backButton = new JButton("X");
+        JButton backButton = new JButton("<-");
         backButton.setBounds(ui.getWIDTH()-60,10,50,50);
         backButton.setFont(new Font("Arial", Font.BOLD, 20));
         backButton.setBackground(Color.red);
@@ -45,6 +45,13 @@ public class TownPanel {
         inventoryButton.setActionCommand("inventory");
         inventoryButton.addActionListener(ch);
         townPanel.add(inventoryButton);
+
+        // Fight Boss
+        JButton fightBossButton = new JButton("Fight Boss");
+        fightBossButton.setBounds(500,300,200,50);
+        fightBossButton.setActionCommand("fightBoss");
+        fightBossButton.addActionListener(ch);
+        townPanel.add(fightBossButton);
 
         // Miner
         JButton mineButton = new JButton("Mine");
