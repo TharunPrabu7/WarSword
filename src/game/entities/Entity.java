@@ -1,5 +1,7 @@
 package game.entities;
 
+import java.util.Random;
+
 public abstract class Entity {
     protected String name;
     protected Stats stats;
@@ -22,7 +24,7 @@ public abstract class Entity {
     }
 
     public int attack(){
-        return stats.getAttack();
+        return new Random().nextInt(stats.getAttack());
     }
 
     public void setName(String name) {

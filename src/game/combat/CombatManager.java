@@ -20,33 +20,27 @@ public class CombatManager {
 
     public void attackBoss(){
         if (boss.isAlive()){
-            boss.takeDamage(soldier.attack());
-            soldier.takeDamage(boss.attack());
+            int dmg = soldier.attack();
+            boss.takeDamage(dmg);
+            System.out.println(dmg);
             if (!boss.isAlive()){
                 combatPanel.getCombatLog().setText(boss.getName() + " is defeated.");
                 combatPanel.getAttackButton().setText("Next Monster");
-                updateCombatDisplay();
-            } else if (!soldier.isAlive()) {
-                combatPanel.getCombatLog().setText(soldier.getName() + " is dead.");
-                combatPanel.getAttackButton().setText("Retry");
-                soldier.getStats().reset();
-                updateCombatDisplay();
+                updateCombatDisplay(dmg);
             } else
-                updateCombatDisplay();
+                updateCombatDisplay(dmg);
         }
         else {
             boss.getStats().reset();
-            updateCombatDisplay();
+            combatPanel.getCombatLog().setText("A new " + boss.getName() + " has appeared!");
+            updateCombatDisplay(0);
             combatPanel.getAttackButton().setText("Attack");
         }
     }
 
-    public void updateCombatDisplay(){
+    public void updateCombatDisplay(int damage){
         combatPanel.getBossHpLabel().setText("Boss HP: " + boss.getHp());
-        combatPanel.getSoldierHpLabel().setText("Soldier HP " + soldier.getHp());
-
-        combatPanel.getCombatLog().setText(boss.getName() + " has taken " + soldier.attack() + " damage.\n" +
-                soldier.getName() + " has taken " + boss.attack() + " damage.");
+        combatPanel.getCombatLog().setText(boss.getName() + " has taken " + damage + " damage.\n");
     }
 
     public Soldier getSoldier(){

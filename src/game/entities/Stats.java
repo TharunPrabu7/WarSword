@@ -22,7 +22,7 @@ public class Stats {
     }
 
     public int getAttack() {
-        return new Random().nextInt(attack);
+        return attack;
     }
 
     public void setAttack(int attack) {

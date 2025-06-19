@@ -23,8 +23,8 @@ public class CombatPanel {
         combatPanel.setBackground(Color.darkGray);
 
         // HP Labels
-        soldierHpLabel = new JLabel("Soldier HP: ");
-        bossHpLabel = new JLabel("Boss HP: ");
+        soldierHpLabel = new JLabel("Soldier HP: " + gc.getCombatManager().getSoldier().getHp());
+        bossHpLabel = new JLabel("Boss HP: " + gc.getCombatManager().getBoss().getHp());
         soldierHpLabel.setBounds(100, 50, 200, 30);
         soldierHpLabel.setForeground(Color.white);
         bossHpLabel.setBounds(100, 100, 200, 30);
