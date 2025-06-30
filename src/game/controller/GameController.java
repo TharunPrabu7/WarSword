@@ -1,6 +1,5 @@
-package game;
+package game.controller;
 
-import game.combat.CombatManager;
 import game.entities.Boss;
 import game.entities.Soldier;
 import game.resources.*;
@@ -19,7 +18,7 @@ public class GameController {
     private final Farm food;
     private final Barracks soldier;
 
-    private CombatManager combatManager;
+    private CombatController combatController;
 
     private final GameUpdateListener uiUpdater;
 
@@ -79,19 +78,19 @@ public class GameController {
         notifyUpdate();
     }
 
-    public CombatManager getCombatManager(){
-        if (combatManager == null){
-            Soldier s = new Soldier("Infantry", 10, 10);
+    public CombatController getCombatManager(){
+        if (combatController == null){
+            Soldier s = new Soldier("Infantry", 20, 10);
             Boss b = new Boss("Goblin", 10, 10);
-            combatManager = new CombatManager(s, b);
+            combatController = new CombatController(s, b);
         }
-        return combatManager;
+        return combatController;
     }
 
     public void startNewCombat(){
         Soldier s = new Soldier("Infantry", 10, 10);
         Boss b = new Boss("Goblin", 10, 10);
-        combatManager = new CombatManager(s, b);
+        combatController = new CombatController(s, b);
     }
 
     public Map<String, Integer> getResourceSummary(){

@@ -1,6 +1,6 @@
 package ui.panels;
 
-import game.GameController;
+import game.controller.GameController;
 import game.Main;
 import ui.UI;
 

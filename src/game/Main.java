@@ -1,6 +1,6 @@
 package game;
 
-import game.combat.CombatManager;
+import game.controller.CombatController;
 import ui.ScreenManager;
 import ui.UI;
 
@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class Main {
 
     private ScreenManager sm;
-    private CombatManager cm;
+    private CombatController cm;
 
     public static void main(String[] args) {
         new Main().startGame();
